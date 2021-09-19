@@ -7,3 +7,9 @@ class AvitoSerializer(ModelSerializer):
     class Meta:
         model = Ads
         fields = ['name', 'created_at', 'price', 'view']
+
+
+class DetailSerializer(ModelSerializer):
+    class Meta:
+        model = Ads
+        fields = '__all__'

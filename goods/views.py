@@ -1,10 +1,11 @@
 import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
 
 from goods.models import Ads
-from goods.serializers import AvitoSerializer
+from goods.serializers import AvitoSerializer, DetailSerializer
 
 
 class AdsViewSet(ModelViewSet):
@@ -16,10 +17,14 @@ class AdsViewSet(ModelViewSet):
     ordering_fields = ['price', 'created_at', 'category__title']
     category__title = django_filters.CharFilter(lookup_expr='icontains')
 
+
+class AdsRetrieveAPIView(RetrieveAPIView):
+    queryset = Ads.objects.all()
+    serializer_class = DetailSerializer
+
     def get_object(self):
         ad = super().get_object()
         ad.view += 1
         ad.save()
         self.view = ad.view
         return ad
-

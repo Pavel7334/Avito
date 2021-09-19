@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework.routers import SimpleRouter
 
-from goods.views import AdsViewSet
+from goods.views import AdsViewSet, AdsRetrieveAPIView
 
 router = SimpleRouter()
 
@@ -25,6 +25,7 @@ router.register(r'ads', AdsViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ad/<int:pk>/', AdsRetrieveAPIView.as_view(), name='detail_ad'),
 ]
 
 urlpatterns += router.urls
